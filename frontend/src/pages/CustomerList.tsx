@@ -6,26 +6,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import Loader from "@/components/Loader";
 import { cn } from '@/lib/utils';
 
-interface CommunicationLog {
+interface Customer {
   _id: string;
-  campaignId: string;
-  customerId: string;
-  customerEmail: string;
-  message: string;
-  status: 'SENT' | 'FAILED' | 'PENDING';
-  createdAt: string;
-  error?: string;
+  name: string;
+  email: string;
+  totalSpend: number;
+  visits: number;
+  lastActive: string;
 }
 
-const DeliveryStatus: React.FC = () => {
+const CustomerList: React.FC = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [logs, setLogs] = useState<CommunicationLog[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
 
@@ -44,20 +40,20 @@ const DeliveryStatus: React.FC = () => {
       return;
     }
 
-    const fetchDeliveryLogs = async () => {
+    const fetchCustomers = async () => {
       try {
-        console.log('Fetching delivery logs with token:', token);
-        const response = await axios.get('http://localhost:5000/api/delivery', {
+        console.log('Fetching customers with token:', token);
+        const response = await axios.get('http://localhost:5000/api/customers', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log('Fetch delivery logs response:', response.data);
-        setLogs(response.data.logs);
+        console.log('Fetch customers response:', response.data);
+        setCustomers(response.data.customers);
         toast({
           title: 'Success',
-          description: 'Delivery logs fetched successfully!',
+          description: 'Customers fetched successfully!',
         });
       } catch (err: any) {
-        console.error('Fetch delivery logs error:', err);
+        console.error('Fetch customers error:', err);
         if (err.code === 'ERR_NETWORK') {
           setError('Cannot connect to the backend. Please ensure the server is running on http://localhost:5000.');
         } else if (err.response?.status === 401) {
@@ -70,7 +66,7 @@ const DeliveryStatus: React.FC = () => {
             variant: 'destructive',
           });
         } else {
-          setError(err.response?.data?.error || 'Failed to fetch delivery logs');
+          setError(err.response?.data?.error || 'Failed to fetch customers');
         }
       } finally {
         setLoading(false);
@@ -83,7 +79,7 @@ const DeliveryStatus: React.FC = () => {
     })
       .then((response) => {
         console.log('Token verification response:', response.data);
-        fetchDeliveryLogs();
+        fetchCustomers();
       })
       .catch((err) => {
         console.error('Token verification error:', err);
@@ -111,19 +107,6 @@ const DeliveryStatus: React.FC = () => {
       minute: '2-digit',
     };
     return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
-  const getStatusVariant = (status: string) => {
-    switch (status) {
-      case 'SENT':
-        return 'bg-green-100 text-green-800 border-green-200';
-      case 'FAILED':
-        return 'bg-red-100 text-red-800 border-red-200';
-      case 'PENDING':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
   };
 
   return (
@@ -163,27 +146,17 @@ const DeliveryStatus: React.FC = () => {
               Campaign History
             </a>
           </li>
-          <li>
-            <a
-              href="/delivery-status"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/delivery-status' && 'font-bold underline')}
-            >
-              Delivery Status
-            </a>
-          </li>
         </ul>
       </nav>
 
-      <Card className="max-w-5xl mx-auto shadow-md">
+      <Card className="max-w-4xl mx-auto shadow-md">
         <CardHeader className="bg-crm-softPurple/30">
-          <CardTitle className="text-crm-darkPurple text-2xl">Delivery Status</CardTitle>
-          <CardDescription>Track the status of communications sent to customers</CardDescription>
+          <CardTitle className="text-crm-darkPurple text-2xl">Customer List</CardTitle>
+          <CardDescription>View all customers in the CRM</CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
           {loading && (
-            <div className="flex justify-center items-center py-12">
-              <Loader size="large" />
-            </div>
+            <div className="text-center">Loading customers...</div>
           )}
 
           {error && (
@@ -194,38 +167,29 @@ const DeliveryStatus: React.FC = () => {
             </Alert>
           )}
 
-          {!loading && !error && logs.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No delivery logs found.</p>
-            </div>
+          {!loading && !error && customers.length === 0 && (
+            <div className="text-center">No customers found.</div>
           )}
 
-          {!loading && !error && logs.length > 0 && (
+          {!loading && !error && customers.length > 0 && (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Customer Email</TableHead>
-                  <TableHead>Message</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Sent At</TableHead>
-                  <TableHead>Error</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Total Spend (₹)</TableHead>
+                  <TableHead>Visits</TableHead>
+                  <TableHead>Last Active</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {logs.map((log) => (
-                  <TableRow key={log._id}>
-                    <TableCell>{log.customerEmail}</TableCell>
-                    <TableCell className="max-w-xs truncate">{log.message}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant="outline"
-                        className={cn('hover:bg-opacity-80', getStatusVariant(log.status))}
-                      >
-                        {log.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{formatDate(log.createdAt)}</TableCell>
-                    <TableCell>{log.error || '-'}</TableCell>
+                {customers.map((customer) => (
+                  <TableRow key={customer._id}>
+                    <TableCell>{customer.name}</TableCell>
+                    <TableCell>{customer.email}</TableCell>
+                    <TableCell>{customer.totalSpend.toLocaleString()}</TableCell>
+                    <TableCell>{customer.visits}</TableCell>
+                    <TableCell>{formatDate(customer.lastActive)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -237,4 +201,4 @@ const DeliveryStatus: React.FC = () => {
   );
 };
 
-export default DeliveryStatus;
+export default CustomerList;

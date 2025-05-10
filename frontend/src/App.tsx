@@ -16,6 +16,7 @@ import AuthGuard from "./components/AuthGuard";
 import AppLayout from "./components/AppLayout";
 import CustomerIngestion from "./pages/CustomerIngestion";
 import DeliveryStatus from "./pages/DeliveryStatus";
+import CustomerList from "./pages/CustomerList";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,8 @@ const App = () => (
             <Route path="/campaigns" element={<CampaignListPage />} />
             <Route path="/ingestion" element={<CustomerIngestion />} />
             <Route path="/status" element={<DeliveryStatus />} />
+            <Route path="/ingest-customer" element={<CustomerList />} />
+
           </Route>
           
           <Route path="*" element={<NotFound />} />

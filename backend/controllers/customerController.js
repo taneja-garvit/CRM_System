@@ -17,3 +17,14 @@ exports.createCustomer = async (req, res) => {
     }
   }
 };
+
+exports.getCustomers = async (req, res) => {
+  try {
+    const customers = await Customer.find();
+    logger.info('Fetched all customers');
+    res.status(200).json({ message: 'Customers fetched successfully', customers });
+  } catch (error) {
+    logger.error('Error fetching customers:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

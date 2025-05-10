@@ -1,6 +1,11 @@
 const express = require('express');
 const passport = require('passport');
 const { googleAuth, googleCallback, success } = require('../controllers/authController');
+const authMiddleware = require('../middleware/auth');
+const logger = require('../utils/logger');
+const User = require('../models/User');
+
+
 
 const router = express.Router();
 
@@ -33,5 +38,20 @@ router.get('/google/callback', googleCallback, success);
  *       302: { description: Redirect to frontend with JWT token }
  */
 router.get('/success', success);
+
+router.get('/user', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      console.log('User not found for ID:', req.user.id);
+      return res.status(404).json({ error: 'User not found' });
+    }
+    console.log(`Fetched user: ${user._id}`);
+    res.status(200).json(user);
+  } catch (error) {
+    console.log('Error fetching user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 module.exports = router;

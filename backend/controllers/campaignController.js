@@ -11,7 +11,7 @@ exports.createCampaign = async (req, res) => {
     if (!mongoose.isValidObjectId(req.user.id)) {
       throw new Error('Invalid user ID');
     }
-    console.log('Creating campaign for user ID:', req.user.id); // Debug log
+    console.log('Creating campaign for user ID:', req.user.id);
     const audience = await Customer.find(segmentRules);
     const campaign = new Campaign({
       userId: new mongoose.Types.ObjectId(req.user.id),
@@ -23,7 +23,8 @@ exports.createCampaign = async (req, res) => {
     await campaign.save();
     logger.info(`Campaign ${campaign._id} created for user ${req.user.id}`);
     await sendCampaign(campaign, audience);
-    res.status(201).json(campaign);
+    const updatedCampaign = await Campaign.findById(campaign._id).populate('communicationLogs');
+    res.status(201).json(updatedCampaign);
   } catch (error) {
     logger.error(`Error creating campaign for user ${req.user?.id || 'unknown'}: ${error.message}`);
     res.status(500).json({ error: 'Failed to create campaign', details: error.message });
@@ -35,20 +36,19 @@ exports.getCampaignHistory = async (req, res) => {
     if (!mongoose.isValidObjectId(req.user.id)) {
       throw new Error('Invalid user ID');
     }
-    console.log('Fetching campaigns for user ID:', req.user.id); // Debug log
+    console.log('Fetching campaigns for user ID:', req.user.id);
     const campaigns = await Campaign.find({ userId: new mongoose.Types.ObjectId(req.user.id) })
       .sort({ createdAt: -1 })
       .populate('communicationLogs');
-    console.log('Campaigns found:', campaigns); // Debug log
-    const campaignsWithStats = await Promise.all(campaigns.map(async (campaign) => {
-      const logs = await CommunicationLog.find({ campaignId: campaign._id });
-      const sent = logs.filter(log => log.status === 'SENT').length;
-      const failed = logs.filter(log => log.status === 'FAILED').length;
+    console.log('Campaigns found:', campaigns);
+    const campaignsWithStats = campaigns.map((campaign) => {
+      const sent = campaign.communicationLogs.filter(log => log.status === 'SENT').length;
+      const failed = campaign.communicationLogs.filter(log => log.status === 'FAILED').length;
       return {
         ...campaign.toObject(),
         deliveryStats: { sent, failed },
       };
-    }));
+    });
     res.json(campaignsWithStats);
   } catch (error) {
     logger.error(`Error fetching campaign history for user ${req.user?.id || 'unknown'}: ${error.message}`);

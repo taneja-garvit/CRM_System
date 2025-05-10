@@ -47,19 +47,19 @@ const CustomerIngestion: React.FC = () => {
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState<boolean>(false);
 
   // Verify authentication on mount
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    axios.get('http://localhost:5000/api/auth/user', {
-      headers: { Authorization: `Bearer ${token}` },
-    }).catch(() => {
-      localStorage.removeItem('token');
-      navigate('/login');
-    });
-  }, [navigate]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     navigate('/login');
+  //     return;
+  //   }
+  //   axios.get('http://localhost:5000/api/auth/user', {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   }).catch(() => {
+  //     localStorage.removeItem('token');
+  //     navigate('/login');
+  //   });
+  // }, [navigate]);
 
   // Validate form inputs
   const validateForm = (): FormErrors => {
