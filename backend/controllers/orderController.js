@@ -1,7 +1,7 @@
-const Order = require('../models/Order');
-const { logger } = require('../utils/logger');
+import Order from '../models/Order.js';
+import { logger } from '../utils/logger.js';
 
-exports.createOrder = async (req, res) => {
+export const createOrder = async (req, res) => {
   try {
     const orderData = req.body;
     const order = new Order(orderData);

@@ -1,7 +1,7 @@
-const express = require('express');
-const { createOrder } = require('../controllers/orderController');
-const authMiddleware = require('../middleware/auth');
-const { validateOrder } = require('../middleware/validate');
+import express from 'express';
+import { createOrder } from '../controllers/orderController.js';
+import authMiddleware from '../middleware/auth.js';
+import { validateOrder } from '../middleware/validate.js';
 
 const router = express.Router();
 
@@ -26,4 +26,4 @@ const router = express.Router();
  */
 router.post('/', authMiddleware, validateOrder, createOrder);
 
-module.exports = router;
+export default router;

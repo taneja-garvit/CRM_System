@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const communicationLogSchema = new mongoose.Schema({
   campaignId: { type: mongoose.Schema.Types.ObjectId, ref: 'Campaign', required: true },
@@ -10,4 +10,4 @@ const communicationLogSchema = new mongoose.Schema({
   error: { type: String },
 });
 
-module.exports = mongoose.model('CommunicationLog', communicationLogSchema);
+export default mongoose.model('CommunicationLog', communicationLogSchema);

@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const Customer = require('../models/Customer');
-const Campaign = require('../models/Campaign');
-const CommunicationLog = require('../models/CommunicationLog');
-const { sendCampaign } = require('../services/vendorService');
-const { logger } = require('../utils/logger');
+import mongoose from 'mongoose';
+import Customer from '../models/Customer.js';
+import Campaign from '../models/Campaign.js';
+import CommunicationLog from '../models/CommunicationLog.js';
+import { sendCampaign } from '../services/vendorService.js';
+import { logger } from '../utils/logger.js';
 
-exports.createCampaign = async (req, res) => {
+export const createCampaign = async (req, res) => {
   try {
     const { segmentRules, message } = req.body;
     if (!mongoose.isValidObjectId(req.user.id)) {
@@ -31,7 +31,7 @@ exports.createCampaign = async (req, res) => {
   }
 };
 
-exports.getCampaignHistory = async (req, res) => {
+export const getCampaignHistory = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.user.id)) {
       throw new Error('Invalid user ID');

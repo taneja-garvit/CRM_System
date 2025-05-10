@@ -1,7 +1,7 @@
-const express = require('express');
-const { createCustomer, getCustomers } = require('../controllers/customerController');
-const authMiddleware = require('../middleware/auth');
-const { validateCustomer } = require('../middleware/validate');
+import express from 'express';
+import { createCustomer, getCustomers } from '../controllers/customerController.js';
+import authMiddleware from '../middleware/auth.js';
+import { validateCustomer } from '../middleware/validate.js';
 
 const router = express.Router();
 
@@ -57,4 +57,4 @@ router.post('/', authMiddleware, validateCustomer, createCustomer);
  */
 router.get('/', authMiddleware, getCustomers);
 
-module.exports = router;
+export default router;

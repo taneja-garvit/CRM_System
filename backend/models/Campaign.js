@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const campaignSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -9,4 +9,4 @@ const campaignSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Campaign', campaignSchema);
+export default mongoose.model('Campaign', campaignSchema);

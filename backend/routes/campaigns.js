@@ -1,7 +1,7 @@
-const express = require('express');
-const { createCampaign, getCampaignHistory } = require('../controllers/campaignController');
-const authMiddleware = require('../middleware/auth');
-const { validateCampaign } = require('../middleware/validate');
+import express from 'express';
+import { createCampaign, getCampaignHistory } from '../controllers/campaignController.js';
+import authMiddleware from '../middleware/auth.js';
+import { validateCampaign } from '../middleware/validate.js';
 
 const router = express.Router();
 
@@ -34,4 +34,4 @@ router.post('/', authMiddleware, validateCampaign, createCampaign);
  */
 router.get('/', authMiddleware, getCampaignHistory);
 
-module.exports = router;
+export default router;

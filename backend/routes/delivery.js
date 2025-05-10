@@ -1,7 +1,7 @@
-const express = require('express');
-const CommunicationLog = require('../models/CommunicationLog');
-const authMiddleware = require('../middleware/auth');
-const { logger } = require('../utils/logger');
+import express from 'express';
+import CommunicationLog from '../models/CommunicationLog.js';
+import authMiddleware from '../middleware/auth.js';
+import { logger } from '../utils/logger.js';
 
 const router = express.Router();
 
@@ -49,4 +49,4 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

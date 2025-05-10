@@ -1,8 +1,8 @@
-const CommunicationLog = require('../models/CommunicationLog');
-const Campaign = require('../models/Campaign');
-const { logger } = require('../utils/logger');
+import CommunicationLog from '../models/CommunicationLog.js';
+import Campaign from '../models/Campaign.js';
+import { logger } from '../utils/logger.js';
 
-exports.sendCampaign = async (campaign, audience) => {
+export const sendCampaign = async (campaign, audience) => {
   const logs = [];
   for (const customer of audience) {
     try {

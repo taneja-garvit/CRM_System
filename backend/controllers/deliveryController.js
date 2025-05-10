@@ -1,7 +1,7 @@
-const CommunicationLog = require('../models/CommunicationLog');
-const { logger } = require('../utils/logger');
+import CommunicationLog from '../models/CommunicationLog.js';
+import { logger } from '../utils/logger.js';
 
-exports.updateDeliveryStatus = async (req, res) => {
+export const updateDeliveryStatus = async (req, res) => {
   try {
     const { campaignId, customerId, status } = req.body;
     const log = new CommunicationLog({ campaignId, customerId, status });

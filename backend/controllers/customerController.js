@@ -1,7 +1,7 @@
-const Customer = require('../models/Customer');
-const { logger } = require('../utils/logger');
+import Customer from '../models/Customer.js';
+import { logger } from '../utils/logger.js';
 
-exports.createCustomer = async (req, res) => {
+export const createCustomer = async (req, res) => {
   try {
     const customerData = req.body;
     const customer = new Customer(customerData);
@@ -18,7 +18,7 @@ exports.createCustomer = async (req, res) => {
   }
 };
 
-exports.getCustomers = async (req, res) => {
+export const getCustomers = async (req, res) => {
   try {
     const customers = await Customer.find();
     logger.info('Fetched all customers');

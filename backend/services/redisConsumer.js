@@ -1,7 +1,7 @@
-const redisClient = require('../config/redis');
-const Customer = require('../models/Customer');
-const Order = require('../models/Order');
-const { logger } = require('../utils/logger');
+import redisClient from '../config/redis.js';
+import Customer from '../models/Customer.js';
+import Order from '../models/Order.js';
+import { logger } from '../utils/logger.js';
 
 const GROUP_NAME = 'xeno-crm-group';
 const CONSUMER_NAME = 'consumer-1';
@@ -16,10 +16,9 @@ async function initConsumerGroup() {
       logger.error('Error creating customer stream group:', error);
     }
   }
+  
   try {
-    await redisClient.xGroupCreate('order:stream', GROUP_NAME, '0', {
-
-System: MKSTREAM: true });
+    await redisClient.xGroupCreate('order:stream', GROUP_NAME, '0', { MKSTREAM: true });
     logger.info('Order stream group created');
   } catch (error) {
     if (!error.message.includes('BUSYGROUP')) {
@@ -37,6 +36,7 @@ const processCustomerStream = async () => {
         count: 10,
         block: 1000,
       });
+      
       if (messages && messages.length > 0) {
         for (const message of messages[0].messages) {
           try {
@@ -67,6 +67,7 @@ const processOrderStream = async () => {
         count: 10,
         block: 1000,
       });
+      
       if (messages && messages.length > 0) {
         for (const message of messages[0].messages) {
           try {
@@ -88,4 +89,4 @@ const processOrderStream = async () => {
   }
 };
 
-module.exports = { processCustomerStream, processOrderStream };
+export { processCustomerStream, processOrderStream };

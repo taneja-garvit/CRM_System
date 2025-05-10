@@ -1,11 +1,9 @@
-const express = require('express');
-const passport = require('passport');
-const { googleAuth, googleCallback, success } = require('../controllers/authController');
-const authMiddleware = require('../middleware/auth');
-const logger = require('../utils/logger');
-const User = require('../models/User');
-
-
+import express from 'express';
+import passport from 'passport';
+import { googleAuth, googleCallback, success } from '../controllers/authController.js';
+import authMiddleware from '../middleware/auth.js';
+import { logger } from '../utils/logger.js';
+import User from '../models/User.js';
 
 const router = express.Router();
 
@@ -54,4 +52,4 @@ router.get('/user', authMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

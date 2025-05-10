@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const customerSchema = Joi.object({
   name: Joi.string().required(),
@@ -19,19 +19,19 @@ const campaignSchema = Joi.object({
   message: Joi.string().required(),
 });
 
-exports.validateCustomer = (req, res, next) => {
+export const validateCustomer = (req, res, next) => {
   const { error } = customerSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
   next();
 };
 
-exports.validateOrder = (req, res, next) => {
+export const validateOrder = (req, res, next) => {
   const { error } = orderSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
   next();
 };
 
-exports.validateCampaign = (req, res, next) => {
+export const validateCampaign = (req, res, next) => {
   const { error } = campaignSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
   next();

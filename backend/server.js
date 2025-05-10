@@ -1,19 +1,18 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const cors = require('cors');
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
-const { mongoConnect } = require('./config/db');
-const swaggerOptions = require('./config/swagger');
-const configurePassport = require('./config/passport'); // Load Passport config
-const authRoutes = require('./routes/auth');
-const customerRoutes = require('./routes/customers');
-const orderRoutes = require('./routes/orders');
-const campaignRoutes = require('./routes/campaigns');
-const deliveryRoutes = require('./routes/delivery');
-const errorHandler = require('./utils/errorHandler');
-
+import express from 'express';
+import mongoose from 'mongoose';
+import passport from 'passport';
+import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
+import { mongoConnect } from './config/db.js';
+import swaggerOptions from './config/swagger.js';
+import configurePassport from './config/passport.js'; // Load Passport config
+import authRoutes from './routes/auth.js';
+import customerRoutes from './routes/customers.js';
+import orderRoutes from './routes/orders.js';
+import campaignRoutes from './routes/campaigns.js';
+import deliveryRoutes from './routes/delivery.js';
+import errorHandler from './utils/errorHandler.js';
 
 const app = express();
 

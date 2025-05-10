@@ -1,17 +1,16 @@
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-
-
-module.exports = function () {
+export default function () {
   passport.use(
     new GoogleStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
-         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: 'http://localhost:5000/api/auth/google/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -46,4 +45,4 @@ module.exports = function () {
       done(error, null);
     }
   });
-};
+}
