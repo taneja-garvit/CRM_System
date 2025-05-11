@@ -1,5 +1,7 @@
 import passport from 'passport';
 import { logger } from '../utils/logger.js';
+import User from '../models/User.js';
+
 
 export const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'], session: false });
 
@@ -38,6 +40,12 @@ export const success = (req, res) => {
   }
   const { token } = req.user;
   console.log(token);
+
+    if (!frontend) {
+    logger.error('FRONTEND_URL is not defined in environment variables.');
+    return res.status(500).send('Server misconfiguration: frontend URL missing');
+  }
+
   // Redirect to frontend with token as query parameter
   res.redirect(`${frontend}/login?token=${token}`);
 };

@@ -3,7 +3,6 @@ import passport from 'passport';
 import { getUsers, googleAuth, googleCallback, success } from '../controllers/authController.js';
 import authMiddleware from '../middleware/auth.js';
 import { logger } from '../utils/logger.js';
-import User from '../models/User.js';
 
 const router = express.Router();
 
