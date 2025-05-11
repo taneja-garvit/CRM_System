@@ -230,73 +230,99 @@ export default function CampaignCreatePage() {
     return { [operator]: conditions };
   };
 
-  return (
-    <div className=" max-w-3xl mx-auto animate-fade-in">
-      <h1 className="text-3xl font-bold mb-6 text-crm-darkPurple">Create Campaign</h1>
-      
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <RuleBuilder 
-          ruleGroup={ruleGroup}
-          onRuleGroupChange={setRuleGroup}
-          onAudienceSizeChange={setAudienceSize}
-        />
-        
-        <div className="space-y-2">
-          <div className="flex justify-between items-center">
-            <label className="text-lg font-medium" htmlFor="message">
-              Campaign Message
-            </label>
+return (
+  <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <Card className="max-w-4xl w-full bg-white shadow-lg rounded-xl overflow-hidden">
+      <CardContent className="p-8">
+        <h1 className="text-4xl font-bold mb-8 text-gray-800 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+          Create Campaign
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Rule Builder Section */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <label className="text-xl font-semibold text-gray-700">
+                Audience Rules
+              </label>
+              <span className="text-sm text-gray-500">
+                Audience Size: <span className="font-medium">{audienceSize}</span>
+              </span>
+            </div>
+            <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+              <RuleBuilder
+                ruleGroup={ruleGroup}
+                onRuleGroupChange={setRuleGroup}
+                onAudienceSizeChange={setAudienceSize}
+              />
+            </div>
+          </div>
+
+          {/* Campaign Message Section */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <label
+                className="text-xl font-semibold text-gray-700"
+                htmlFor="message"
+              >
+                Campaign Message
+              </label>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleGenerateAIMessage}
+                disabled={aiLoading}
+                className="relative bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-medium rounded-lg px-4 py-2 hover:from-purple-600 hover:to-indigo-600 transition-all duration-300 shadow-md disabled:opacity-50"
+              >
+                {aiLoading ? (
+                  <div className="flex items-center">
+                    <Loader size="small" className="mr-2" />
+                    <span>Generating...</span>
+                  </div>
+                ) : (
+                  <span>Generate with AI</span>
+                )}
+              </Button>
+            </div>
+            <Textarea
+              id="message"
+              placeholder="Enter your campaign message here..."
+              className="min-h-[120px] w-full p-4 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-4">
             <Button
               type="button"
               variant="outline"
-              onClick={handleGenerateAIMessage}
-              disabled={aiLoading}
-              className="bg-purple-500 hover:bg-purple-600 text-white"
+              onClick={() => navigate("/campaigns/create")}
+              disabled={isLoading}
+              className="px-6 py-2 text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition-all duration-200"
             >
-              {aiLoading ? (
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="relative bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-medium rounded-lg px-6 py-2 hover:from-purple-600 hover:to-indigo-600 transition-all duration-300 shadow-md disabled:opacity-50"
+              disabled={isLoading}
+            >
+              {isLoading ? (
                 <div className="flex items-center">
                   <Loader size="small" className="mr-2" />
-                  <span>Generating...</span>
+                  <span>Creating Campaign...</span>
                 </div>
               ) : (
-                <span>Generate with AI</span>
+                <span>Create Campaign</span>
               )}
             </Button>
           </div>
-          <Textarea
-            id="message"
-            placeholder="Enter your campaign message here..."
-            className="min-h-[100px]"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        </div>
-        
-        <div className="flex justify-end space-x-4">
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={() => navigate("/campaigns")}
-            disabled={isLoading}
-          >
-            Cancel
-          </Button>
-          <Button 
-            type="submit"
-            className="bg-purple-500 hover:bg-purple-600 text-white"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <div className="flex items-center">
-                <Loader size="small" className="mr-2" />
-                <span>Creating Campaign...</span>
-              </div>
-            ) : (
-              <span>Create Campaign</span>
-            )}
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
+        </form>
+      </CardContent>
+    </Card>
+  </div>
+);
+
 }

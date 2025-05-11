@@ -94,64 +94,68 @@ export default function CampaignListPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto animate-fade-in">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-crm-darkPurple">Campaign History</h1>
-        <Button 
-          onClick={() => navigate('/campaigns/create')}
-          className="bg-crm-purple hover:bg-crm-darkPurple text-white"
-        >
-          <PlusCircle className="mr-2 h-4 w-4" />
-          New Campaign
-        </Button>
-      </div>
-      
-      <Card>
-        <CardContent className="p-0">
-          {isLoading ? (
-            <div className="flex justify-center items-center py-12">
-              <Loader size="large" />
-            </div>
-          ) : campaigns.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground mb-4">No campaigns found</p>
-              <Button 
-                onClick={() => navigate('/campaigns/create')}
-                className="bg-crm-purple hover:bg-crm-darkPurple text-white"
-              >
-                Create Your First Campaign
-              </Button>
-            </div>
-          ) : (
-            <Table>
+  <div className="max-w-6xl mx-auto px-6 py-10 animate-fade-in">
+    <div className="flex justify-between items-center mb-8">
+      <h1 className="text-4xl font-bold text-purple-600">📊 Campaign History</h1>
+      <Button
+        onClick={() => navigate('/campaigns/create')}
+        className="bg-purple-600 hover:bg-purple-700 text-white transition-all"
+      >
+        <PlusCircle className="mr-2 h-5 w-5" />
+        New Campaign
+      </Button>
+    </div>
+
+    <Card className="shadow-lg border border-gray-200 rounded-lg">
+      <CardContent className="p-0">
+        {isLoading ? (
+          <div className="flex justify-center items-center py-16">
+            <Loader size="large" />
+          </div>
+        ) : campaigns.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-gray-500 text-lg mb-6">No campaigns found</p>
+            <Button
+              onClick={() => navigate('/campaigns/create')}
+              className="bg-purple-600 hover:bg-purple-700 text-white transition-all"
+            >
+              Create Your First Campaign
+            </Button>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <Table className="min-w-full divide-y divide-gray-200">
               <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[300px]">Message</TableHead>
-                  <TableHead>Audience Size</TableHead>
-                  <TableHead>Sent</TableHead>
-                  <TableHead>Failed</TableHead>
-                  <TableHead>Created At</TableHead>
-                  <TableHead>Status</TableHead>
+                <TableRow className="bg-gray-100 text-gray-700">
+                  <TableHead className="w-[320px] font-semibold">Message</TableHead>
+                  <TableHead className="font-semibold">Audience Size</TableHead>
+                  <TableHead className="font-semibold">Sent</TableHead>
+                  <TableHead className="font-semibold">Failed</TableHead>
+                  <TableHead className="font-semibold">Created At</TableHead>
+                  <TableHead className="font-semibold">Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {campaigns.map((campaign) => (
-                  <TableRow key={campaign.id}>
-                    <TableCell className="font-medium">
+                  <TableRow 
+                    key={campaign.id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
+                    <TableCell className="font-medium text-gray-800">
                       {campaign.message.length > 40 
                         ? `${campaign.message.substring(0, 40)}...` 
                         : campaign.message}
                     </TableCell>
-                    <TableCell>{campaign.audienceSize.toLocaleString()}</TableCell>
-                    <TableCell>{campaign.stats.sent.toLocaleString()}</TableCell>
-                    <TableCell className={campaign.stats.failed > 0 ? "text-destructive" : ""}>
+                    <TableCell className="text-gray-700">{campaign.audienceSize.toLocaleString()}</TableCell>
+                    <TableCell className="text-gray-700">{campaign.stats.sent.toLocaleString()}</TableCell>
+                    <TableCell className={campaign.stats.failed > 0 ? "text-red-600 font-semibold" : "text-gray-700"}>
                       {campaign.stats.failed.toLocaleString()}
                     </TableCell>
-                    <TableCell>{formatDate(campaign.createdAt)}</TableCell>
+                    <TableCell className="text-gray-600">{formatDate(campaign.createdAt)}</TableCell>
                     <TableCell>
                       <Badge 
                         variant="outline" 
-                        className="bg-green-100 text-green-800 hover:bg-green-100 border-green-200"
+                        className="bg-green-100 text-green-800 border border-green-300 px-2 py-1 text-sm"
                       >
                         Completed
                       </Badge>
@@ -160,9 +164,11 @@ export default function CampaignListPage() {
                 ))}
               </TableBody>
             </Table>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  );
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  </div>
+);
+
 }

@@ -126,51 +126,41 @@ const DeliveryStatus: React.FC = () => {
     }
   };
 
-  return (
-    <div className="animate-fade-in">
-      {/* Navigation Bar */}
-      <nav className="bg-crm-softPurple/30 p-4">
-        <ul className="flex space-x-4">
-          <li>
-            <a
-              href="/ingest-customer"
-              className={cn('text-purple-500 font-semibold', window.location.pathname === '/ingest-customer' && 'font-bold underline')}
-            >
-              Ingest Customer
-            </a>
-          </li>
-        </ul>
-      </nav>
+ return (
+  <div className="animate-fade-in px-4 py-8 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <Card className="shadow-lg border border-gray-200 rounded-lg">
+      <CardHeader className="bg-purple-50 border-b border-purple-200 rounded-t-lg">
+        <CardTitle className="text-purple-600 text-2xl font-bold">📬 Delivery Status</CardTitle>
+        <CardDescription className="text-gray-700">
+          Track the status of communications sent to customers
+        </CardDescription>
+      </CardHeader>
 
-      <Card className="max-w-5xl mt-2 mx-auto shadow-md">
-        <CardHeader className="bg-crm-softPurple/30">
-          <CardTitle className="text-crm-darkPurple text-2xl">Delivery Status</CardTitle>
-          <CardDescription>Track the status of communications sent to customers</CardDescription>
-        </CardHeader>
-        <CardContent className="pt-6">
-          {loading && (
-            <div className="flex justify-center items-center py-12">
-              <Loader size="large" />
-            </div>
-          )}
+      <CardContent className="pt-6">
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <Loader size="large" />
+          </div>
+        )}
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-5 w-5" />
+            <AlertTitle className="font-semibold">Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
-          {!loading && !error && logs.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No delivery logs found.</p>
-            </div>
-          )}
+        {!loading && !error && logs.length === 0 && (
+          <div className="text-center py-12 text-gray-500">
+            <p>No delivery logs found.</p>
+          </div>
+        )}
 
-          {!loading && !error && logs.length > 0 && (
-            <Table>
-              <TableHeader>
+        {!loading && !error && logs.length > 0 && (
+          <div className="overflow-auto rounded-lg border border-gray-100">
+            <Table className="min-w-full text-sm">
+              <TableHeader className="bg-gray-100 text-gray-700">
                 <TableRow>
                   <TableHead>Customer Email</TableHead>
                   <TableHead>Message</TableHead>
@@ -180,29 +170,37 @@ const DeliveryStatus: React.FC = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {logs.map((log) => (
-                  <TableRow key={log._id}>
-                    <TableCell>{log.customerEmail}</TableCell>
-                    <TableCell className="max-w-xs truncate">{log.message}</TableCell>
-                    <TableCell>
+                {logs.map((log, index) => (
+                  <TableRow
+                    key={log._id}
+                    className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                  >
+                    <TableCell className="py-3">{log.customerEmail}</TableCell>
+                    <TableCell className="py-3 max-w-md truncate">{log.message}</TableCell>
+                    <TableCell className="py-3">
                       <Badge
                         variant="outline"
-                        className={cn('hover:bg-opacity-80', getStatusVariant(log.status))}
+                        className={cn(
+                          'text-xs px-2 py-1 rounded-full border',
+                          getStatusVariant(log.status)
+                        )}
                       >
                         {log.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>{formatDate(log.createdAt)}</TableCell>
-                    <TableCell>{log.error || '-'}</TableCell>
+                    <TableCell className="py-3">{formatDate(log.createdAt)}</TableCell>
+                    <TableCell className="py-3">{log.error || <span className="text-gray-400">-</span>}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  );
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  </div>
+);
+
 };
 
 export default DeliveryStatus;

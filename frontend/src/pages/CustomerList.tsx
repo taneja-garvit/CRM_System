@@ -157,93 +157,49 @@ const CustomerList: React.FC = () => {
   };
 
   return (
-    <div className="animate-fade-in">
-      {/* Navigation Bar */}
-      {/* <nav className="bg-crm-softPurple/30 p-4">
-        <ul className="flex space-x-4">
-          <li>
-            <a
-              href="/ingest-customer"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/ingest-customer' && 'font-bold underline')}
-            >
-              Customer List
-            </a>
-          </li>
-          <li>
-            <a
-              href="/ingestion"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/ingestion' && 'font-bold underline')}
-            >
-              Ingest Customer
-            </a>
-          </li>
-          <li>
-            <a
-              href="/campaigns/create"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/campaigns/create' && 'font-bold underline')}
-            >
-              Campaign Creation
-            </a>
-          </li>
-          <li>
-            <a
-              href="/campaigns/history"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/campaigns/history' && 'font-bold underline')}
-            >
-              Campaign History
-            </a>
-          </li>
-          <li>
-            <a
-              href="/status"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/status' && 'font-bold underline')}
-            >
-              Delivery Status
-            </a>
-          </li>
-        </ul>
-      </nav> */}
-
-      <Card className="max-w-5xl mx-auto shadow-md">
-        <CardHeader className="bg-crm-softPurple/30">
-          <div className="flex justify-between items-center">
-            <div>
-              <CardTitle className="text-crm-darkPurple text-2xl">Customer List</CardTitle>
-              <CardDescription>View all customers in the CRM</CardDescription>
-            </div>
-            <Button
-              onClick={handleSegmentWithAI}
-              disabled={segmentLoading || loading}
-              className="bg-crm-purple hover:bg-crm-darkPurple text-white"
-            >
-              {segmentLoading ? 'Segmenting...' : 'Segment Customers with AI'}
-            </Button>
+  <div className="animate-fade-in px-4 py-8 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <Card className="shadow-lg border border-gray-200 rounded-lg">
+      <CardHeader className="bg-purple-50 border-b border-purple-200 rounded-t-lg">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <CardTitle className="text-purple-600 text-2xl font-bold">📋 Customer List</CardTitle>
+            <CardDescription className="text-gray-700">View all customers in your CRM system</CardDescription>
           </div>
-        </CardHeader>
-        <CardContent className="pt-6">
-          {loading && (
-            <div className="flex justify-center items-center py-12">
-              <Loader size="large" />
-            </div>
-          )}
+          <Button
+            onClick={handleSegmentWithAI}
+            disabled={segmentLoading || loading}
+            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2"
+          >
+            {segmentLoading ? 'Segmenting...' : 'Segment Customers with AI'}
+          </Button>
+        </div>
+      </CardHeader>
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+      <CardContent className="pt-6">
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <Loader size="large" />
+          </div>
+        )}
 
-          {!loading && !error && customers.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No customers found.</p>
-            </div>
-          )}
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-5 w-5" />
+            <AlertTitle className="font-semibold">Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
-          {!loading && !error && customers.length > 0 && (
-            <Table>
-              <TableHeader>
+        {!loading && !error && customers.length === 0 && (
+          <div className="text-center py-12 text-gray-500">
+            <p>No customers found.</p>
+          </div>
+        )}
+
+        {!loading && !error && customers.length > 0 && (
+          <div className="overflow-auto rounded-lg border border-gray-100">
+            <Table className="min-w-full text-sm">
+              <TableHeader className="bg-gray-100 text-gray-700">
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
@@ -254,34 +210,42 @@ const CustomerList: React.FC = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {customers.map((customer) => (
-                  <TableRow key={customer._id}>
-                    <TableCell>{customer.name}</TableCell>
-                    <TableCell>{customer.email}</TableCell>
-                    <TableCell>{customer.totalSpend.toLocaleString()}</TableCell>
-                    <TableCell>{customer.visits}</TableCell>
-                    <TableCell>{formatDate(customer.lastActive)}</TableCell>
-                    <TableCell>
+                {customers.map((customer, index) => (
+                  <TableRow
+                    key={customer._id}
+                    className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                  >
+                    <TableCell className="py-3">{customer.name}</TableCell>
+                    <TableCell className="py-3">{customer.email}</TableCell>
+                    <TableCell className="py-3">₹{customer.totalSpend.toLocaleString()}</TableCell>
+                    <TableCell className="py-3">{customer.visits}</TableCell>
+                    <TableCell className="py-3">{formatDate(customer.lastActive)}</TableCell>
+                    <TableCell className="py-3">
                       {customer.segment ? (
                         <Badge
                           variant="outline"
-                          className={cn('hover:bg-opacity-80', getSegmentVariant(customer.segment))}
+                          className={cn(
+                            'text-xs px-2 py-1 rounded-full border',
+                            getSegmentVariant(customer.segment)
+                          )}
                         >
                           {customer.segment}
                         </Badge>
                       ) : (
-                        '-'
+                        <span className="text-gray-400">-</span>
                       )}
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  );
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  </div>
+);
+
 };
 
 export default CustomerList;

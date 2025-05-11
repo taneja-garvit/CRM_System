@@ -147,176 +147,128 @@ const CustomerIngestion: React.FC = () => {
   };
 
   return (
-    <div className="animate-fade-in">     
-      <Card className="max-w-2xl mt-2 mx-auto shadow-md">
-        <CardHeader className="bg-crm-softPurple/30">
-          <CardTitle className="text-crm-darkPurple text-2xl">Ingest Customer Data</CardTitle>
-          <CardDescription>Add a single customer to the CRM</CardDescription>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <form onSubmit={handleFormSubmit} className="space-y-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Customer Name</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                />
-                {errors.name && (
-                  <div className="text-red-500 text-sm">{errors.name}</div>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-                {errors.email && (
-                  <div className="text-red-500 text-sm">{errors.email}</div>
-                )}
-              </div>
-            </div>
+  <div className="animate-fade-in px-4 py-8 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+    <Card className="shadow-xl border border-gray-200">
+      <CardHeader className="bg-purple-50 border-b border-purple-200 rounded-t-lg">
+        <CardTitle className="text-purple-600 text-2xl font-bold">👤 Ingest Customer Data</CardTitle>
+        <CardDescription className="text-gray-700">
+          Add a single customer to your CRM system
+        </CardDescription>
+      </CardHeader>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="totalSpend">Total Spend (₹)</Label>
-                <Input
-                  id="totalSpend"
-                  type="number"
-                  name="totalSpend"
-                  value={formData.totalSpend}
-                  onChange={handleInputChange}
-                  placeholder="Enter amount"
-                />
-                {errors.totalSpend && (
-                  <div className="text-red-500 text-sm">{errors.totalSpend}</div>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="visits">Number of Visits</Label>
-                <Input
-                  id="visits"
-                  type="number"
-                  name="visits"
-                  value={formData.visits}
-                  onChange={handleInputChange}
-                  placeholder="Enter visits"
-                />
-                {errors.visits && (
-                  <div className="text-red-500 text-sm">{errors.visits}</div>
-                )}
-              </div>
-            </div>
-
+      <CardContent className="pt-6">
+        <form onSubmit={handleFormSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="lastActive">Last Active Date</Label>
-              <Input
-                id="lastActive"
-                type="datetime-local"
-                name="lastActive"
-                value={formData.lastActive}
-                onChange={handleDateSelect}
-              />
-              {errors.lastActive && (
-                <div className="text-red-500 text-sm">{errors.lastActive}</div>
-              )}
+              <Label htmlFor="name">Customer Name</Label>
+              <Input id="name" name="name" value={formData.name} onChange={handleInputChange} />
+              {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input id="email" name="email" value={formData.email} onChange={handleInputChange} />
+              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+            </div>
+          </div>
 
-            {message && (
-              <Alert className="bg-green-50 border-green-200">
-                <AlertTitle className="text-green-800 flex items-center gap-2">
-                  Success
-                </AlertTitle>
-                <AlertDescription className="text-green-700">
-                  {message}
-                </AlertDescription>
-              </Alert>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="totalSpend">Total Spend (₹)</Label>
+              <Input id="totalSpend" name="totalSpend" type="number" value={formData.totalSpend} onChange={handleInputChange} />
+              {errors.totalSpend && <p className="text-sm text-red-600">{errors.totalSpend}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="visits">Number of Visits</Label>
+              <Input id="visits" name="visits" type="number" value={formData.visits} onChange={handleInputChange} />
+              {errors.visits && <p className="text-sm text-red-600">{errors.visits}</p>}
+            </div>
+          </div>
 
-            {error && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>
-                  {error}
-                </AlertDescription>
-              </Alert>
-            )}
+          <div className="space-y-2">
+            <Label htmlFor="lastActive">Last Active Date</Label>
+            <Input id="lastActive" type="datetime-local" name="lastActive" value={formData.lastActive} onChange={handleDateSelect} />
+            {errors.lastActive && <p className="text-sm text-red-600">{errors.lastActive}</p>}
+          </div>
 
-            <CardFooter className="px-0 pt-4 flex space-x-2">
-              <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
-                <DialogTrigger asChild>
-                  <Button type="submit" disabled={isSubmitting} className='bg-purple-500 hover:bg-purple-600'>
-                    {isSubmitting ? 'Processing...' : 'Ingest Customer Data'}
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Confirm Submission</DialogTitle>
-                    <DialogDescription>
-                      Are you sure you want to ingest this customer data? Please review the details:
-                      <ul className="mt-2">
-                        <li><strong>Name:</strong> {formData.name}</li>
-                        <li><strong>Email:</strong> {formData.email}</li>
-                        <li><strong>Total Spend:</strong> ₹{formData.totalSpend || 0}</li>
-                        <li><strong>Visits:</strong> {formData.visits || 0}</li>
-                        <li><strong>Last Active:</strong> {formData.lastActive ? new Date(formData.lastActive).toLocaleString() : 'Not set'}</li>
-                      </ul>
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter>
-                    <Button variant="outline" onClick={() => setIsConfirmOpen(false)}>
-                      Cancel
-                    </Button>
-                    <Button onClick={handleSubmit}>
-                      Confirm
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setFormData({ name: '', email: '', totalSpend: '', visits: '', lastActive: '' })}
-                disabled={isSubmitting}
-              >
-                Clear
-              </Button>
-            </CardFooter>
-          </form>
-
-          {customer && (
-            <Collapsible
-              open={isCollapsibleOpen}
-              onOpenChange={setIsCollapsibleOpen}
-              className="mt-4"
-            >
-              <CollapsibleTrigger className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold">Created Customer Details</h2>
-                {isCollapsibleOpen ? <ChevronUp /> : <ChevronDown />}
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2">
-                <p><strong>Name:</strong> {customer.name}</p>
-                <p><strong>Email:</strong> {customer.email}</p>
-                <p><strong>Total Spend:</strong> ₹{customer.totalSpend}</p>
-                <p><strong>Visits:</strong> {customer.visits}</p>
-                <p><strong>Last Active:</strong> {customer.lastActive ? new Date(customer.lastActive).toLocaleString() : 'Not set'}</p>
-              </CollapsibleContent>
-            </Collapsible>
+          {message && (
+            <Alert className="bg-green-50 border-green-300">
+              <AlertTitle className="text-green-700 font-semibold">Success</AlertTitle>
+              <AlertDescription className="text-green-600">{message}</AlertDescription>
+            </Alert>
           )}
-        </CardContent>
-      </Card>
-    </div>
-  );
+
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          <CardFooter className="px-0 pt-4 flex justify-between">
+            <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+              <DialogTrigger asChild>
+                <Button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white" disabled={isSubmitting}>
+                  {isSubmitting ? 'Processing...' : 'Ingest Customer Data'}
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle className="text-lg font-semibold">Confirm Submission</DialogTitle>
+                  <DialogDescription className="text-sm text-gray-600">
+                    Please confirm the details before submitting:
+                  </DialogDescription>
+                  <ul className="mt-4 space-y-1 text-sm text-gray-800">
+                    <li><strong>Name:</strong> {formData.name}</li>
+                    <li><strong>Email:</strong> {formData.email}</li>
+                    <li><strong>Total Spend:</strong> ₹{formData.totalSpend || 0}</li>
+                    <li><strong>Visits:</strong> {formData.visits || 0}</li>
+                    <li><strong>Last Active:</strong> {formData.lastActive ? new Date(formData.lastActive).toLocaleString() : 'Not set'}</li>
+                  </ul>
+                </DialogHeader>
+                <DialogFooter className="mt-4">
+                  <Button variant="outline" onClick={() => setIsConfirmOpen(false)}>Cancel</Button>
+                  <Button onClick={handleSubmit}>Confirm</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setFormData({ name: '', email: '', totalSpend: '', visits: '', lastActive: '' })}
+              disabled={isSubmitting}
+              className="text-gray-700 hover:text-black"
+            >
+              Clear Form
+            </Button>
+          </CardFooter>
+        </form>
+
+        {customer && (
+          <Collapsible
+            open={isCollapsibleOpen}
+            onOpenChange={setIsCollapsibleOpen}
+            className="mt-8 bg-gray-50 border border-gray-200 rounded-md p-4"
+          >
+            <CollapsibleTrigger className="flex items-center justify-between w-full cursor-pointer">
+              <h2 className="text-md font-medium text-gray-700">Created Customer Details</h2>
+              {isCollapsibleOpen ? <ChevronUp className="text-gray-500" /> : <ChevronDown className="text-gray-500" />}
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-4 text-sm text-gray-800 space-y-1">
+              <p><strong>Name:</strong> {customer.name}</p>
+              <p><strong>Email:</strong> {customer.email}</p>
+              <p><strong>Total Spend:</strong> ₹{customer.totalSpend}</p>
+              <p><strong>Visits:</strong> {customer.visits}</p>
+              <p><strong>Last Active:</strong> {customer.lastActive ? new Date(customer.lastActive).toLocaleString() : 'Not set'}</p>
+            </CollapsibleContent>
+          </Collapsible>
+        )}
+      </CardContent>
+    </Card>
+  </div>
+);
+
 };
 
 export default CustomerIngestion;
