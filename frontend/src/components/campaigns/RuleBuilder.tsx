@@ -126,7 +126,7 @@ export default function RuleBuilder({
               <SelectItem value="OR">OR</SelectItem>
             </SelectContent>
           </Select>
-          <Button onClick={handleAddRule}>
+          <Button onClick={handleAddRule} className="bg-purple-500 hover:bg-purple-600 text-white">
             <PlusCircle className="mr-2 h-4 w-4" />
             Add Rule
           </Button>

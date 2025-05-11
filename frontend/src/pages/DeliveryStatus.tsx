@@ -134,7 +134,7 @@ const DeliveryStatus: React.FC = () => {
           <li>
             <a
               href="/ingest-customer"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/ingest-customer' && 'font-bold underline')}
+              className={cn('text-purple-500 font-semibold', window.location.pathname === '/ingest-customer' && 'font-bold underline')}
             >
               Ingest Customer
             </a>

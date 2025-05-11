@@ -269,7 +269,7 @@ const CustomerIngestion: React.FC = () => {
             <CardFooter className="px-0 pt-4 flex space-x-2">
               <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
                 <DialogTrigger asChild>
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button type="submit" disabled={isSubmitting} className='bg-purple-500 hover:bg-purple-600'>
                     {isSubmitting ? 'Processing...' : 'Ingest Customer Data'}
                   </Button>
                 </DialogTrigger>

@@ -12,6 +12,7 @@ export default function CampaignCreatePage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false); // For AI button loading state
   const [message, setMessage] = useState("");
   const [audienceSize, setAudienceSize] = useState(0);
   const [ruleGroup, setRuleGroup] = useState<RuleGroup>({
@@ -20,7 +21,7 @@ export default function CampaignCreatePage() {
     combinator: "AND"
   });
 
-  // Fetch audience size when ruleGroup changes
+  // Fetch audience size and data when ruleGroup changes
   useEffect(() => {
     if (ruleGroup.rules.length === 0) {
       setAudienceSize(0);
@@ -52,13 +53,95 @@ export default function CampaignCreatePage() {
             variant: "destructive",
           });
         } else {
-         console.log("Failed in preview audience")
+          console.log("Failed in preview audience");
         }
       }
     };
 
     fetchAudienceSize();
   }, [ruleGroup, navigate, toast]);
+
+  // Function to generate AI message
+  const handleGenerateAIMessage = async () => {
+    if (ruleGroup.rules.length === 0) {
+      toast({
+        title: "No audience defined",
+        description: "Please add rules to define your audience before generating a message.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setAiLoading(true);
+    try {
+      const token = localStorage.getItem('auth_token');
+      const segmentRules = convertRulesToMongoQuery(ruleGroup);
+
+      // Fetch audience data to craft a better prompt
+      // const previewResponse = await axios.post(
+      //   'http://localhost:5000/api/customers/preview',
+      //   { segmentRules },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       'Content-Type': 'application/json',
+      //     },
+      //   }
+      // );
+
+      // const audienceData = previewResponse.data;
+      let prompt = "Generate a promotional campaign message for customers";
+      
+      // Add context based on rules
+      const spendRule = ruleGroup.rules.find(rule => rule.field === 'totalSpend');
+      if (spendRule) {
+        prompt += ` who spend ${spendRule.operator} $${spendRule.value} on average`;
+      }
+      
+      const visitsRule = ruleGroup.rules.find(rule => rule.field === 'visits');
+      if (visitsRule) {
+        prompt += ` with ${visitsRule.operator} ${visitsRule.value} visits`;
+      }
+
+      prompt += '. Offer a discount or incentive.';
+
+      // Call backend to generate message
+      const aiResponse = await axios.post(
+        'http://localhost:5000/api/campaigns/generate-message',
+        { prompt},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      setMessage(aiResponse.data.message);
+      toast({
+        title: "Message generated",
+        description: "AI has generated a campaign message. Feel free to edit it!",
+      });
+    } catch (error) {
+      if (error.response?.status === 401) {
+        localStorage.removeItem('auth_token');
+        navigate('/');
+        toast({
+          title: "Session expired",
+          description: "Please log in again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Failed to generate message",
+          description: error.response?.data?.error || "Could not generate message with AI.",
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,14 +167,11 @@ export default function CampaignCreatePage() {
     setIsLoading(true);
     
     try {
-      // Convert rules to MongoDB query format
       const segmentRules = convertRulesToMongoQuery(ruleGroup);
       const token = localStorage.getItem('auth_token');
       
-      // Log payload for debugging
       console.log('Campaign payload:', { segmentRules, message });
       
-      // Create campaign via backend API
       const response = await axios.post(
         'http://localhost:5000/api/campaigns',
         { segmentRules, message },
@@ -110,7 +190,6 @@ export default function CampaignCreatePage() {
         description: "Your campaign has been successfully created."
       });
       
-      // Redirect to campaigns list
       navigate("/campaigns");
     } catch (error) {
       console.error('Error creating campaign:', error.response?.data);
@@ -134,26 +213,19 @@ export default function CampaignCreatePage() {
     }
   };
 
-  // Convert rules to MongoDB query format
   const convertRulesToMongoQuery = (ruleGroup: RuleGroup) => {
     if (ruleGroup.rules.length === 0) return {};
     
     const conditions = ruleGroup.rules.map(rule => {
-      // Handle lastActive field specially (convert to date)
       if (rule.field === 'lastActive') {
         const daysAgo = parseInt(rule.value) || 0;
         const date = new Date();
         date.setDate(date.getDate() - daysAgo);
-        
-        // For lastActive, we use $lt to find users inactive for X days
         return { [rule.field]: { '$lt': date.toISOString() } };
       }
-      
-      // For other fields, use the operator directly
       return { [rule.field]: { [rule.operator]: parseFloat(rule.value) } };
     });
     
-    // If using AND, use $and operator, otherwise use $or
     const operator = ruleGroup.combinator === 'AND' ? '$and' : '$or';
     return { [operator]: conditions };
   };
@@ -170,9 +242,27 @@ export default function CampaignCreatePage() {
         />
         
         <div className="space-y-2">
-          <label className="text-lg font-medium" htmlFor="message">
-            Campaign Message
-          </label>
+          <div className="flex justify-between items-center">
+            <label className="text-lg font-medium" htmlFor="message">
+              Campaign Message
+            </label>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleGenerateAIMessage}
+              disabled={aiLoading}
+              className="bg-purple-500 hover:bg-purple-600 text-white"
+            >
+              {aiLoading ? (
+                <div className="flex items-center">
+                  <Loader size="small" className="mr-2" />
+                  <span>Generating...</span>
+                </div>
+              ) : (
+                <span>Generate with AI</span>
+              )}
+            </Button>
+          </div>
           <Textarea
             id="message"
             placeholder="Enter your campaign message here..."
@@ -181,17 +271,6 @@ export default function CampaignCreatePage() {
             onChange={(e) => setMessage(e.target.value)}
           />
         </div>
-        
-        {/* <Card className="bg-crm-softPurple border-none">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-medium text-crm-darkPurple">Audience Preview</h3>
-              <div className="text-xl font-bold text-crm-darkPurple">
-                {audienceSize.toLocaleString()} customers
-              </div>
-            </div>
-          </CardContent>
-        </Card> */}
         
         <div className="flex justify-end space-x-4">
           <Button 
@@ -204,7 +283,7 @@ export default function CampaignCreatePage() {
           </Button>
           <Button 
             type="submit"
-            className="bg-crm-purple hover:bg-crm-darkPurple text-white"
+            className="bg-purple-500 hover:bg-purple-600 text-white"
             disabled={isLoading}
           >
             {isLoading ? (
