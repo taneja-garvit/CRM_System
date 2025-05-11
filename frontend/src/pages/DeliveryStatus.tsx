@@ -139,42 +139,10 @@ const DeliveryStatus: React.FC = () => {
               Ingest Customer
             </a>
           </li>
-          <li>
-            <a
-              href="/customers"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/customers' && 'font-bold underline')}
-            >
-              Customer List
-            </a>
-          </li>
-          <li>
-            <a
-              href="/campaign-creation"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/campaign-creation' && 'font-bold underline')}
-            >
-              Campaign Creation
-            </a>
-          </li>
-          <li>
-            <a
-              href="/campaign-history"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/campaign-history' && 'font-bold underline')}
-            >
-              Campaign History
-            </a>
-          </li>
-          <li>
-            <a
-              href="/delivery-status"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/delivery-status' && 'font-bold underline')}
-            >
-              Delivery Status
-            </a>
-          </li>
         </ul>
       </nav>
 
-      <Card className="max-w-5xl mx-auto shadow-md">
+      <Card className="max-w-5xl mt-2 mx-auto shadow-md">
         <CardHeader className="bg-crm-softPurple/30">
           <CardTitle className="text-crm-darkPurple text-2xl">Delivery Status</CardTitle>
           <CardDescription>Track the status of communications sent to customers</CardDescription>

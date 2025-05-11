@@ -52,11 +52,7 @@ export default function CampaignCreatePage() {
             variant: "destructive",
           });
         } else {
-          toast({
-            title: "Failed to preview audience",
-            description: "Unable to fetch audience size.",
-            variant: "destructive",
-          });
+         console.log("Failed in preview audience")
         }
       }
     };
@@ -186,7 +182,7 @@ export default function CampaignCreatePage() {
           />
         </div>
         
-        <Card className="bg-crm-softPurple border-none">
+        {/* <Card className="bg-crm-softPurple border-none">
           <CardContent className="p-4">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-medium text-crm-darkPurple">Audience Preview</h3>
@@ -195,7 +191,7 @@ export default function CampaignCreatePage() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
         
         <div className="flex justify-end space-x-4">
           <Button 

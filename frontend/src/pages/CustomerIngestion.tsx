@@ -15,8 +15,8 @@ import { cn } from '@/lib/utils';
 interface CustomerData {
   name: string;
   email: string;
-  totalSpend: number;
-  visits: number;
+  totalSpend: number | '';
+  visits: number | '';
   lastActive: string;
 }
 
@@ -34,8 +34,8 @@ const CustomerIngestion: React.FC = () => {
   const [formData, setFormData] = useState<CustomerData>({
     name: '',
     email: '',
-    totalSpend: 0,
-    visits: 0,
+    totalSpend: '',
+    visits: '',
     lastActive: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -45,21 +45,6 @@ const CustomerIngestion: React.FC = () => {
   const [customer, setCustomer] = useState<CustomerData | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState<boolean>(false);
-
-  // Verify authentication on mount
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (!token) {
-  //     navigate('/login');
-  //     return;
-  //   }
-  //   axios.get('http://localhost:5000/api/auth/user', {
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   }).catch(() => {
-  //     localStorage.removeItem('token');
-  //     navigate('/login');
-  //   });
-  // }, [navigate]);
 
   // Validate form inputs
   const validateForm = (): FormErrors => {
@@ -72,10 +57,10 @@ const CustomerIngestion: React.FC = () => {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Invalid email format';
     }
-    if (formData.totalSpend < 0) {
+    if (formData.totalSpend !== '' && Number(formData.totalSpend) < 0) {
       newErrors.totalSpend = 'Must be positive';
     }
-    if (formData.visits < 0 || !Number.isInteger(formData.visits)) {
+    if (formData.visits !== '' && (Number(formData.visits) < 0 || !Number.isInteger(Number(formData.visits)))) {
       newErrors.visits = 'Must be a positive integer';
     }
     if (formData.lastActive && isNaN(new Date(formData.lastActive).getTime())) {
@@ -89,8 +74,18 @@ const CustomerIngestion: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'totalSpend' || name === 'visits' ? Number(value) : value,
+      [name]: name === 'totalSpend' || name === 'visits' ? (value === '' ? '' : Number(value)) : value,
     }));
+  };
+
+  // Handle date selection
+  const handleDateSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      lastActive: e.target.value,
+    }));
+    // Force blur to close the datetime picker
+    e.target.blur();
   };
 
   // Handle form submission
@@ -100,10 +95,13 @@ const CustomerIngestion: React.FC = () => {
     setError('');
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/customers', {
+      const submitData = {
         ...formData,
-        lastActive: formData.lastActive || undefined, // Send undefined if empty
-      }, {
+        totalSpend: formData.totalSpend === '' ? 0 : formData.totalSpend,
+        visits: formData.visits === '' ? 0 : formData.visits,
+        lastActive: formData.lastActive || undefined,
+      };
+      const response = await axios.post('http://localhost:5000/api/customers', submitData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -114,8 +112,8 @@ const CustomerIngestion: React.FC = () => {
       setFormData({
         name: '',
         email: '',
-        totalSpend: 0,
-        visits: 0,
+        totalSpend: '',
+        visits: '',
         lastActive: '',
       });
       setErrors({});
@@ -161,26 +159,10 @@ const CustomerIngestion: React.FC = () => {
               Ingest Customer
             </a>
           </li>
-          <li>
-            <a
-              href="/campaign-creation"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/campaign-creation' && 'font-bold underline')}
-            >
-              Campaign Creation
-            </a>
-          </li>
-          <li>
-            <a
-              href="/campaign-history"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/campaign-history' && 'font-bold underline')}
-            >
-              Campaign History
-            </a>
-          </li>
         </ul>
       </nav>
 
-      <Card className="max-w-2xl mx-auto shadow-md">
+      <Card className="max-w-2xl mt-2 mx-auto shadow-md">
         <CardHeader className="bg-crm-softPurple/30">
           <CardTitle className="text-crm-darkPurple text-2xl">Ingest Customer Data</CardTitle>
           <CardDescription>Add a single customer to the CRM</CardDescription>
@@ -227,6 +209,7 @@ const CustomerIngestion: React.FC = () => {
                   name="totalSpend"
                   value={formData.totalSpend}
                   onChange={handleInputChange}
+                  placeholder="Enter amount"
                 />
                 {errors.totalSpend && (
                   <div className="text-red-500 text-sm">{errors.totalSpend}</div>
@@ -240,6 +223,7 @@ const CustomerIngestion: React.FC = () => {
                   name="visits"
                   value={formData.visits}
                   onChange={handleInputChange}
+                  placeholder="Enter visits"
                 />
                 {errors.visits && (
                   <div className="text-red-500 text-sm">{errors.visits}</div>
@@ -254,7 +238,7 @@ const CustomerIngestion: React.FC = () => {
                 type="datetime-local"
                 name="lastActive"
                 value={formData.lastActive}
-                onChange={handleInputChange}
+                onChange={handleDateSelect}
               />
               {errors.lastActive && (
                 <div className="text-red-500 text-sm">{errors.lastActive}</div>
@@ -297,8 +281,8 @@ const CustomerIngestion: React.FC = () => {
                       <ul className="mt-2">
                         <li><strong>Name:</strong> {formData.name}</li>
                         <li><strong>Email:</strong> {formData.email}</li>
-                        <li><strong>Total Spend:</strong> ₹{formData.totalSpend}</li>
-                        <li><strong>Visits:</strong> {formData.visits}</li>
+                        <li><strong>Total Spend:</strong> ₹{formData.totalSpend || 0}</li>
+                        <li><strong>Visits:</strong> {formData.visits || 0}</li>
                         <li><strong>Last Active:</strong> {formData.lastActive ? new Date(formData.lastActive).toLocaleString() : 'Not set'}</li>
                       </ul>
                     </DialogDescription>
@@ -316,7 +300,7 @@ const CustomerIngestion: React.FC = () => {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => setFormData({ name: '', email: '', totalSpend: 0, visits: 0, lastActive: '' })}
+                onClick={() => setFormData({ name: '', email: '', totalSpend: '', visits: '', lastActive: '' })}
                 disabled={isSubmitting}
               >
                 Clear
