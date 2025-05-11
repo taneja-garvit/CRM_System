@@ -13,6 +13,9 @@ import orderRoutes from './routes/orders.js';
 import campaignRoutes from './routes/campaigns.js';
 import deliveryRoutes from './routes/delivery.js';
 import errorHandler from './utils/errorHandler.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app = express();
 

@@ -28,6 +28,8 @@ const CustomerList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [segmentLoading, setSegmentLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const backend = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -47,7 +49,7 @@ const CustomerList: React.FC = () => {
     const fetchCustomers = async () => {
       try {
         console.log('Fetching customers with token:', token);
-        const response = await axios.get('http://localhost:5000/api/customers', {
+        const response = await axios.get(`${backend}/api/customers`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log('Fetch customers response:', response.data);
@@ -78,7 +80,7 @@ const CustomerList: React.FC = () => {
     };
 
     console.log('Verifying token with /api/auth/user');
-    axios.get('http://localhost:5000/api/auth/user', {
+    axios.get(`${backend}/api/auth/user`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {
@@ -114,7 +116,7 @@ const CustomerList: React.FC = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/customers/segment',
+        `${backend}/api/customers/segment`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

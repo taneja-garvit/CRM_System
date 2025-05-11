@@ -90,19 +90,16 @@ export default function RuleBuilder({
     simulateAudienceSizeUpdate(updatedRuleGroup);
   };
 
-  // Simulate audience size update - in a real app this would call the API
   const simulateAudienceSizeUpdate = (ruleGroup: RuleGroup) => {
     if (ruleGroup.rules.length === 0) {
       onAudienceSizeChange(0);
       return;
     }
     
-    // Simple audience size simulation based on rules
     const baseSize = 5000;
     const multiplier = ruleGroup.combinator === 'AND' ? 0.7 : 1.3;
     const ruleImpact = ruleGroup.rules.length * 300;
     
-    // Generate a size that changes based on rules but appears realistic
     const simulatedSize = Math.floor((baseSize - ruleImpact) * multiplier);
     const finalSize = Math.max(simulatedSize, 100); // Ensure at least 100 users
     

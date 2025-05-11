@@ -45,6 +45,8 @@ const CustomerIngestion: React.FC = () => {
   const [customer, setCustomer] = useState<CustomerData | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState<boolean>(false);
+  const backend = import.meta.env.VITE_BACKEND_URL;
+
 
   // Validate form inputs
   const validateForm = (): FormErrors => {
@@ -101,7 +103,7 @@ const CustomerIngestion: React.FC = () => {
         visits: formData.visits === '' ? 0 : formData.visits,
         lastActive: formData.lastActive || undefined,
       };
-      const response = await axios.post('http://localhost:5000/api/customers', submitData, {
+      const response = await axios.post(`${backend}/api/customers`, submitData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,

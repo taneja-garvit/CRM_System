@@ -9,6 +9,7 @@ import Loader from "@/components/Loader";
 import axios from 'axios';
 
 export default function CampaignCreatePage() {
+const backend = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +34,7 @@ export default function CampaignCreatePage() {
         const segmentRules = convertRulesToMongoQuery(ruleGroup);
         const token = localStorage.getItem('auth_token');
         const response = await axios.post(
-          'http://localhost:5000/api/customers/preview',
+          `${backend}/api/customers/preview`,
           { segmentRules },
           {
             headers: {
@@ -107,7 +108,7 @@ export default function CampaignCreatePage() {
 
       // Call backend to generate message
       const aiResponse = await axios.post(
-        'http://localhost:5000/api/campaigns/generate-message',
+        `${backend}/api/campaigns/generate-message`,
         { prompt},
         {
           headers: {
@@ -173,7 +174,7 @@ export default function CampaignCreatePage() {
       console.log('Campaign payload:', { segmentRules, message });
       
       const response = await axios.post(
-        'http://localhost:5000/api/campaigns',
+        `${backend}/api/campaigns`,
         { segmentRules, message },
         {
           headers: {

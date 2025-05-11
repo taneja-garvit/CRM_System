@@ -11,7 +11,6 @@ export default function AppHeader() {
     navigate('/login');
   };
 
-  // Function to determine if a link is active
   const isActiveRoute = (path: string) => {
     return location.pathname === path || location.pathname.startsWith(path);
   };

@@ -6,7 +6,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import axios from 'axios';
 
-// Axios Interceptor to add token to requests
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('auth_token');
@@ -23,6 +22,8 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const location = useLocation();
+  const backend = import.meta.env.VITE_BACKEND_URL;
+
 
   // Check for token in URL after Google OAuth redirect
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       // Redirect to backend Google OAuth endpoint
-      window.location.href = 'http://localhost:5000/api/auth/google';
+      window.location.href = `${backend}/api/auth/google`;
     } catch (error) {
       toast({
         title: "Authentication failed",

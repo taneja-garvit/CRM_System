@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Backpack } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -28,6 +28,8 @@ const DeliveryStatus: React.FC = () => {
   const [logs, setLogs] = useState<CommunicationLog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const backend = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -47,7 +49,7 @@ const DeliveryStatus: React.FC = () => {
     const fetchDeliveryLogs = async () => {
       try {
         console.log('Fetching delivery logs with token:', token);
-        const response = await axios.get('http://localhost:5000/api/delivery', {
+        const response = await axios.get(`${backend}/api/delivery`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log('Fetch delivery logs response:', response.data);
@@ -78,7 +80,7 @@ const DeliveryStatus: React.FC = () => {
     };
 
     console.log('Verifying token with /api/auth/user');
-    axios.get('http://localhost:5000/api/auth/user', {
+    axios.get(`${backend}/api/auth/user`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {

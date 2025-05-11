@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const mongoConnect = async () => {
   try {
-    await mongoose.connect("mongodb+srv://tanejaggarvit:garvit@cluster0.zw7tt5l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

@@ -3,6 +3,8 @@ import { logger } from '../utils/logger.js';
 
 export const googleAuth = passport.authenticate('google', { scope: ['profile', 'email'], session: false });
 
+const frontend = process.env.FRONTEND_URL
+
 export const googleCallback = (req, res, next) => {
   passport.authenticate('google', { session: false }, (err, data) => {
     if (err) {
@@ -37,5 +39,20 @@ export const success = (req, res) => {
   const { token } = req.user;
   console.log(token);
   // Redirect to frontend with token as query parameter
-  res.redirect(`http://localhost:8080/login?token=${token}`);
+  res.redirect(`${frontend}/login?token=${token}`);
+};
+
+export const getUsers = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      console.log('User not found for ID:', req.user.id);
+      return res.status(404).json({ error: 'User not found' });
+    }
+    console.log(`Fetched user: ${user._id}`);
+    res.status(200).json(user);
+  } catch (error) {
+    console.log('Error fetching user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };

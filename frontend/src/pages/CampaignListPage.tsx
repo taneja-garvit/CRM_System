@@ -33,6 +33,8 @@ export default function CampaignListPage() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const backend = import.meta.env.VITE_BACKEND_URL;
+
 
   useEffect(() => {
     // Fetch campaigns when component mounts
@@ -44,7 +46,7 @@ export default function CampaignListPage() {
     
     try {
       // Fetch campaigns from backend API
-      const response = await axios.get('http://localhost:5000/api/campaigns');
+      const response = await axios.get(`${backend}/api/campaigns`);
       const backendCampaigns = response.data;
       
       // Map backend data to frontend Campaign interface
