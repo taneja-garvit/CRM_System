@@ -1,3 +1,4 @@
+const backend = process.env.BACKEND_URL;
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -6,7 +7,7 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'API for Xeno SDE Internship Mini CRM Platform',
     },
-    servers: [{ url: 'http://localhost:5000/api' }],
+    servers: [{ url: `${backend}/api` }],
   },
   apis: ['./routes/*.js'],
 };
