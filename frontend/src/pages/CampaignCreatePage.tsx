@@ -190,7 +190,7 @@ export default function CampaignCreatePage() {
         description: "Your campaign has been successfully created."
       });
       
-      navigate("/campaigns");
+      navigate("/campaigns/history");
     } catch (error) {
       console.error('Error creating campaign:', error.response?.data);
       if (error.response?.status === 401) {

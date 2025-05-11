@@ -2,6 +2,7 @@ import express from 'express';
 import CommunicationLog from '../models/CommunicationLog.js';
 import authMiddleware from '../middleware/auth.js';
 import { logger } from '../utils/logger.js';
+import { getDeliveryLogs } from '../controllers/deliveryController.js';
 
 const router = express.Router();
 
@@ -35,18 +36,8 @@ const router = express.Router();
  *       401: { description: Unauthorized }
  *       500: { description: Internal server error }
  */
-router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const logs = await CommunicationLog.find()
-      .populate('campaignId', 'message')
-      .populate('customerId', 'email')
-      .lean();
-    logger.info('Fetched delivery logs');
-    res.status(200).json({ message: 'Delivery logs fetched successfully', logs });
-  } catch (error) {
-    logger.error('Error fetching delivery logs:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+
+router.get('/', authMiddleware, getDeliveryLogs);
+
 
 export default router;

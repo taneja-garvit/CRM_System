@@ -53,6 +53,16 @@ export default function AppHeader() {
               >
                 Customer Ingestion
               </a>
+               <a 
+                href="/ingest-customer" 
+                className={`text-sm font-medium transition-colors ${
+                  isActiveRoute('/ingest-customer') 
+                    ? 'text-crm-purple' 
+                    : 'text-gray-300 hover:text-crm-purple'
+                }`}
+              >
+                Customers List
+              </a>
               <a 
                 href="/status" 
                 className={`text-sm font-medium transition-colors ${

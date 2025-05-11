@@ -147,21 +147,7 @@ const CustomerIngestion: React.FC = () => {
   };
 
   return (
-    <div className="animate-fade-in">
-      {/* Navigation Bar */}
-      <nav className="bg-crm-softPurple/30 p-4">
-        <ul className="flex space-x-4">
-          <li>
-            <a
-              href="/ingest-customer"
-              className={cn('text-purple-500 font-semibold', window.location.pathname === '/ingest-customer' && 'font-bold underline')}
-            >
-              Ingest Customer
-            </a>
-          </li>
-        </ul>
-      </nav>
-
+    <div className="animate-fade-in">     
       <Card className="max-w-2xl mt-2 mx-auto shadow-md">
         <CardHeader className="bg-crm-softPurple/30">
           <CardTitle className="text-crm-darkPurple text-2xl">Ingest Customer Data</CardTitle>

@@ -210,3 +210,33 @@
 {"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-11T09:40:09.054Z"}
 {"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T09:40:22.094Z"}
 {"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T09:40:26.741Z"}
+{"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-11T10:50:08.513Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T10:50:27.276Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T10:56:57.943Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T10:57:38.047Z"}
+{"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-11T10:57:48.347Z"}
+{"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-11T11:04:54.451Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T11:05:09.085Z"}
+{"level":"info","message":"Campaign 68208492b7097cb5e959c91c created for user 681e16e5e9580d4eb804f09b","timestamp":"2025-05-11T11:05:54.923Z"}
+{"level":"info","message":"Campaign 68208492b7097cb5e959c91c updated with 0 communication logs","timestamp":"2025-05-11T11:05:54.977Z"}
+{"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-11T11:07:17.721Z"}
+{"level":"info","message":"Campaign 682084f9b7097cb5e959c922 created for user 681e16e5e9580d4eb804f09b","timestamp":"2025-05-11T11:07:37.527Z"}
+{"level":"info","message":"Communication log created for taneja.garvit29@gmaile.com: SENT","timestamp":"2025-05-11T11:07:37.574Z"}
+{"level":"info","message":"Campaign 682084f9b7097cb5e959c922 updated with 1 communication logs","timestamp":"2025-05-11T11:07:37.621Z"}
+{"level":"info","message":"Campaign 68208551b7097cb5e959c92c created for user 681e16e5e9580d4eb804f09b","timestamp":"2025-05-11T11:09:05.591Z"}
+{"level":"info","message":"Communication log created for taneja.garvit29@gmaile.com: SENT","timestamp":"2025-05-11T11:09:05.633Z"}
+{"level":"info","message":"Campaign 68208551b7097cb5e959c92c updated with 1 communication logs","timestamp":"2025-05-11T11:09:05.677Z"}
+{"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-11T11:09:38.668Z"}
+{"level":"info","message":"Customer 682085aeb7097cb5e959c939 created","timestamp":"2025-05-11T11:10:38.303Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T11:10:45.859Z"}
+{"level":"info","message":"Campaign 682085f0b7097cb5e959c942 created for user 681e16e5e9580d4eb804f09b","timestamp":"2025-05-11T11:11:45.051Z"}
+{"level":"info","message":"Communication log created for mohit@example.com: SENT","timestamp":"2025-05-11T11:11:45.096Z"}
+{"level":"info","message":"Communication log created for mohit@examplae.com: SENT","timestamp":"2025-05-11T11:11:45.142Z"}
+{"level":"info","message":"Communication log created for taneja.garvit29@gmaile.com: SENT","timestamp":"2025-05-11T11:11:45.185Z"}
+{"level":"info","message":"Communication log created for taneja.sohit@gmail.com: SENT","timestamp":"2025-05-11T11:11:45.226Z"}
+{"level":"info","message":"Campaign 682085f0b7097cb5e959c942 updated with 4 communication logs","timestamp":"2025-05-11T11:11:45.271Z"}
+{"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-11T11:12:04.420Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T11:12:24.952Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T11:28:11.613Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T11:28:26.171Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T11:28:33.493Z"}
