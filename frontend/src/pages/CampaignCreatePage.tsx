@@ -231,7 +231,7 @@ export default function CampaignCreatePage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto animate-fade-in">
+    <div className=" max-w-3xl mx-auto animate-fade-in">
       <h1 className="text-3xl font-bold mb-6 text-crm-darkPurple">Create Campaign</h1>
       
       <form onSubmit={handleSubmit} className="space-y-8">

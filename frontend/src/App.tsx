@@ -33,7 +33,7 @@ const App = () => (
           {/* Protected routes */}
           <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
             <Route path="/campaigns/create" element={<CampaignCreatePage />} />
-            <Route path="/campaigns" element={<CampaignListPage />} />
+            <Route path="/campaigns/history" element={<CampaignListPage />} />
             <Route path="/ingestion" element={<CustomerIngestion />} />
             <Route path="/status" element={<DeliveryStatus />} />
             <Route path="/ingest-customer" element={<CustomerList />} />

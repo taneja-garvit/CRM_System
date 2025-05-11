@@ -117,12 +117,12 @@ const CustomerList: React.FC = () => {
           <li>
             <a
               href="/ingest-customer"
-              className={cn('text-crm-darkPurple', window.location.pathname === '/ingest-customer' && 'font-bold underline')}
+              className={cn('text-purple-500 font-semibold', window.location.pathname === '/ingest-customer' && 'font-bold underline')}
             >
               Ingest Customer
             </a>
           </li>
-          <li>
+          {/* <li>
             <a
               href="/customers"
               className={cn('text-crm-darkPurple', window.location.pathname === '/customers' && 'font-bold underline')}
@@ -145,7 +145,7 @@ const CustomerList: React.FC = () => {
             >
               Campaign History
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
 
