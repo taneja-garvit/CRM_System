@@ -47,7 +47,7 @@ export const success = (req, res) => {
   }
 
   // Redirect to frontend with token as query parameter
-  res.redirect(`https://crm-system-ten.vercel.app/login?token=${token}`);
+  res.redirect(`${frontend}/login?token=${token}`);
 };
 
 export const getUsers = async (req, res) => {
