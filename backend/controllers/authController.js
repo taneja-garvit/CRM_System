@@ -42,7 +42,7 @@ export const success = (req, res) => {
   console.log(token);
 
     if (!frontend) {
-    logger.error('FRONTEND_URL is not defined in environment variables.');
+    console.log('FRONTEND_URL is not defined in environment variables.');
     return res.status(500).send('Server misconfiguration: frontend URL missing');
   }
 
