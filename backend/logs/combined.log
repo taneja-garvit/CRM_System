@@ -306,3 +306,5 @@
 {"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-12T13:41:09.481Z"}
 {"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-12T14:39:22.563Z"}
 {"level":"info","message":"Sending token to frontend: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUxNmU1ZTk1ODBkNGViODA0ZjA5YiIsImlhdCI6MTc0NzA2MDc2MiwiZXhwIjoxNzQ3MDY0MzYyfQ.3OfcNu7ZHwq8bXAoggmSYpmNVOT5SfwPj8bXWaYRP44","timestamp":"2025-05-12T14:39:22.574Z"}
+{"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-12T17:36:44.104Z"}
+{"level":"info","message":"Sending token to frontend: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUxNmU1ZTk1ODBkNGViODA0ZjA5YiIsImlhdCI6MTc0NzA3MTQwNCwiZXhwIjoxNzQ3MDc1MDA0fQ.YPyeb9ySOBuWsyMEf5e3OJycFUkCw3uL1du0SofoONE","timestamp":"2025-05-12T17:36:44.108Z"}

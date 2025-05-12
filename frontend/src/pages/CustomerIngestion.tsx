@@ -96,7 +96,7 @@ const CustomerIngestion: React.FC = () => {
     setMessage('');
     setError('');
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('auth_token');
       const submitData = {
         ...formData,
         totalSpend: formData.totalSpend === '' ? 0 : formData.totalSpend,
