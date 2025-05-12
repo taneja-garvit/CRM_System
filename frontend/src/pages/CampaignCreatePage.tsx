@@ -234,9 +234,9 @@ return (
               <label className="text-xl font-semibold text-gray-700">
                 Audience Rules
               </label>
-              <span className="text-sm text-gray-500">
+              {/* <span className="text-sm text-gray-500">
                 Audience Size: <span className="font-medium">{audienceSize}</span>
-              </span>
+              </span> */}
             </div>
             <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
               <RuleBuilder
