@@ -2,52 +2,76 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/Loader";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import axios from 'axios';
-
-axios.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('auth_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const location = useLocation();
   const backend = import.meta.env.VITE_BACKEND_URL;
 
-
-  // Check for token in URL after Google OAuth redirect
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const token = query.get('token');
-    if (token) {
-      localStorage.setItem('auth_token', token);
-      navigate('/campaigns/create');
-    }
-  }, [location, navigate]);
-
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = () => {
     setIsLoading(true);
-    try {
-      // Redirect to backend Google OAuth endpoint
-      window.location.href = `${backend}/api/auth/google`;
-    } catch (error) {
-      toast({
-        title: "Authentication failed",
-        description: "Please try again later",
-        variant: "destructive",
-      });
-      setIsLoading(false);
-    }
+
+    // Open a popup window for Google OAuth
+    const width = 600;
+    const height = 600;
+    const left = (window.screen.width - width) / 2;
+    const top = (window.screen.height - height) / 2;
+    const popup = window.open(
+      `${backend}/api/auth/google`,
+      "Google OAuth",
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
+
+    // Listen for messages from the popup
+    const handleMessage = (event) => {
+      // Ensure the message is from the expected origin (backend)
+      if (event.origin !== backend) return;
+
+      const { success, token, error } = event.data;
+
+      if (error) {
+        toast({
+          title: "Authentication failed",
+          description: error || "Please try again later",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        popup?.close();
+        return;
+      }
+
+      if (success && token) {
+        localStorage.setItem('auth_token', token);
+        toast({
+          title: "Success",
+          description: "Logged in successfully!",
+        });
+        navigate('/campaigns/create');
+        setIsLoading(false);
+        popup?.close();
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    // Cleanup listener when popup closes
+    const checkPopup = setInterval(() => {
+      if (popup?.closed) {
+        clearInterval(checkPopup);
+        window.removeEventListener('message', handleMessage);
+        if (isLoading) {
+          setIsLoading(false);
+          toast({
+            title: "Authentication cancelled",
+            description: "Please try again.",
+            variant: "destructive",
+          });
+        }
+      }
+    }, 500);
   };
 
   return (
