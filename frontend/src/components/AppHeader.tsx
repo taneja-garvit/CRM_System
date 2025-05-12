@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function AppHeader() {
   const navigate = useNavigate();
@@ -22,62 +22,62 @@ export default function AppHeader() {
           <h1 className="text-xl font-bold text-gray-100">SegmentSpark CRM</h1>
           {isLoggedIn && (
             <nav className="hidden md:flex items-center gap-6 ml-6">
-              <a 
-                href="/campaigns/create" 
+              <Link
+                to="/campaigns/create"
                 className={`text-sm font-medium transition-colors ${
-                  isActiveRoute('/campaigns/create') 
-                    ? 'text-crm-purple' 
+                  isActiveRoute('/campaigns/create')
+                    ? 'text-crm-purple'
                     : 'text-gray-300 hover:text-crm-purple'
                 }`}
               >
                 Create Campaign
-              </a>
-              <a 
-                href="/campaigns/history" 
+              </Link>
+              <Link
+                to="/campaigns/history"
                 className={`text-sm font-medium transition-colors ${
-                  isActiveRoute('/campaigns/history') 
-                    ? 'text-crm-purple' 
+                  isActiveRoute('/campaigns/history')
+                    ? 'text-crm-purple'
                     : 'text-gray-300 hover:text-crm-purple'
                 }`}
               >
                 Campaign History
-              </a>
-              <a 
-                href="/ingestion" 
+              </Link>
+              <Link
+                to="/ingestion"
                 className={`text-sm font-medium transition-colors ${
-                  isActiveRoute('/ingestion') 
-                    ? 'text-crm-purple' 
+                  isActiveRoute('/ingestion')
+                    ? 'text-crm-purple'
                     : 'text-gray-300 hover:text-crm-purple'
                 }`}
               >
                 Customer Ingestion
-              </a>
-               <a 
-                href="/ingest-customer" 
+              </Link>
+              <Link
+                to="/ingest-customer"
                 className={`text-sm font-medium transition-colors ${
-                  isActiveRoute('/ingest-customer') 
-                    ? 'text-crm-purple' 
+                  isActiveRoute('/ingest-customer')
+                    ? 'text-crm-purple'
                     : 'text-gray-300 hover:text-crm-purple'
                 }`}
               >
                 Customers List
-              </a>
-              <a 
-                href="/status" 
+              </Link>
+              <Link
+                to="/status"
                 className={`text-sm font-medium transition-colors ${
-                  isActiveRoute('/status') 
-                    ? 'text-crm-purple' 
+                  isActiveRoute('/status')
+                    ? 'text-crm-purple'
                     : 'text-gray-300 hover:text-crm-purple'
                 }`}
               >
                 Delivery Status
-              </a>
+              </Link>
             </nav>
           )}
         </div>
         {isLoggedIn && (
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={handleLogout}
             className="bg-gray-800 text-gray-200 border-gray-600 hover:bg-gray-700 hover:text-gray-100"
           >
