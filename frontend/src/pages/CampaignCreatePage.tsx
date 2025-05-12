@@ -104,7 +104,7 @@ const backend = import.meta.env.VITE_BACKEND_URL;
         prompt += ` with ${visitsRule.operator} ${visitsRule.value} visits`;
       }
 
-      prompt += '. Offer a discount or incentive.';
+      prompt += '. Offer a discount or incentive (also add some emojis accordingly).';
 
       // Call backend to generate message
       const aiResponse = await axios.post(
