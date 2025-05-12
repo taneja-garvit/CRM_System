@@ -23,7 +23,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
-//adding axios
 configurePassport(); // Initialize Google strategy
 
 // Swagger Setup

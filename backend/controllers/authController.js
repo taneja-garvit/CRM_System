@@ -47,7 +47,11 @@ export const success = (req, res) => {
   }
 
   // Redirect to frontend with token as query parameter
-  res.redirect(`${frontend}/login?token=${token}`);
+  // res.redirect(`${frontend}/login?token=${token}`);
+  res.json({
+    success,
+    token
+  })
 };
 
 export const getUsers = async (req, res) => {
