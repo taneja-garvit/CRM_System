@@ -90,7 +90,7 @@ const CustomerList: React.FC = () => {
       .catch((err) => {
         console.error('Token verification error:', err);
         if (err.code === 'ERR_NETWORK') {
-          setError('Cannot connect to the backend. Please ensure the server is running on http://localhost:5000.');
+          setError('Cannot connect to the backend. Please ensure the server is running .');
           setLoading(false);
         } else {
           localStorage.removeItem('auth_token');

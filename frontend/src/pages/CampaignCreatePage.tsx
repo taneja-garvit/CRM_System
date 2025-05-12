@@ -78,19 +78,7 @@ const backend = import.meta.env.VITE_BACKEND_URL;
       const token = localStorage.getItem('auth_token');
       const segmentRules = convertRulesToMongoQuery(ruleGroup);
 
-      // Fetch audience data to craft a better prompt
-      // const previewResponse = await axios.post(
-      //   'http://localhost:5000/api/customers/preview',
-      //   { segmentRules },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       'Content-Type': 'application/json',
-      //     },
-      //   }
-      // );
-
-      // const audienceData = previewResponse.data;
+     
       let prompt = "Generate a promotional campaign message for customers";
       
       // Add context based on rules
