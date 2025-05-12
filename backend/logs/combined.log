@@ -304,3 +304,5 @@
 {"level":"info","message":"Campaign 6821f93e0ef83253b3b7b244 created for user 681e16e5e9580d4eb804f09b","timestamp":"2025-05-12T13:35:59.090Z"}
 {"level":"info","message":"Campaign 6821f93e0ef83253b3b7b244 updated with 0 communication logs","timestamp":"2025-05-12T13:35:59.177Z"}
 {"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-12T13:41:09.481Z"}
+{"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-12T14:39:22.563Z"}
+{"level":"info","message":"Sending token to frontend: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUxNmU1ZTk1ODBkNGViODA0ZjA5YiIsImlhdCI6MTc0NzA2MDc2MiwiZXhwIjoxNzQ3MDY0MzYyfQ.3OfcNu7ZHwq8bXAoggmSYpmNVOT5SfwPj8bXWaYRP44","timestamp":"2025-05-12T14:39:22.574Z"}

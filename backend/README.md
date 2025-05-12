@@ -31,7 +31,7 @@ Access Swagger UI at http://localhost:5000/api-docs.
 
 Architecture
 
-Frontend: (To be built with React.js, Bolt/Lovable)
+Frontend: (To be built with React.js)
 Backend: Node.js, Express.js
 Database: MongoDB
 Message Broker: Redis Streams

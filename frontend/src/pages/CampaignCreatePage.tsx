@@ -119,10 +119,10 @@ const backend = import.meta.env.VITE_BACKEND_URL;
       );
 
       setMessage(aiResponse.data.message);
-      toast({
-        title: "Message generated",
-        description: "AI has generated a campaign message. Feel free to edit it!",
-      });
+      // toast({
+      //   title: "Message generated",
+      //   description: "AI has generated a campaign message. Feel free to edit it!",
+      // });
     } catch (error) {
       if (error.response?.status === 401) {
         localStorage.removeItem('auth_token');
