@@ -223,7 +223,7 @@ return (
   <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
     <Card className="max-w-4xl w-full bg-white shadow-lg rounded-xl overflow-hidden">
       <CardContent className="p-8">
-        <h1 className="text-4xl font-bold mb-8 text-gray-800 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold mb-6 text-gray-800 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
           Create Campaign
         </h1>
 
