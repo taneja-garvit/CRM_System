@@ -87,12 +87,18 @@ export default function LoginPage() {
             onClick={handleGoogleLogin}
             disabled={isLoading}
           >
+             <img 
+                  className="h-5 w-5"
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  alt="Google"
+                />
             {isLoading ? (
               <div className="flex items-center">
                 <Loader size="small" className="mr-2" />
                 <span>Authenticating...</span>
               </div>
             ) : (
+              
               <span>Login with Google</span>
             )}
           </Button>

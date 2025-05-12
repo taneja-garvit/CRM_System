@@ -287,3 +287,20 @@
 {"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-11T18:49:33.413Z"}
 {"level":"info","message":"Fetched all customers","timestamp":"2025-05-11T18:50:00.174Z"}
 {"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-11T18:50:04.227Z"}
+{"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-12T12:40:35.641Z"}
+{"level":"info","message":"Sending token to frontend: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUxNmU1ZTk1ODBkNGViODA0ZjA5YiIsImlhdCI6MTc0NzA1MzYzNSwiZXhwIjoxNzQ3MDU3MjM1fQ.MyjtAgWUkRofkue_I0KIn-gHqVitqxufv9EBFMzW2E4","timestamp":"2025-05-12T12:40:35.650Z"}
+{"level":"error","message":"No user found in auth callback","timestamp":"2025-05-12T13:06:00.293Z"}
+{"level":"error","message":"No user found in auth callback","timestamp":"2025-05-12T13:08:56.823Z"}
+{"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-05-12T13:20:23.546Z"}
+{"level":"info","message":"Sending token to frontend: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUxNmU1ZTk1ODBkNGViODA0ZjA5YiIsImlhdCI6MTc0NzA1NjAyMywiZXhwIjoxNzQ3MDU5NjIzfQ.L4YlAJ7R_vbvDOpbBfKMysBkbnL1omLP606WlB5Pe_k","timestamp":"2025-05-12T13:20:23.548Z"}
+{"level":"info","message":"Customer 6821f5ca0ef83253b3b7b23f created","timestamp":"2025-05-12T13:21:14.236Z"}
+{"level":"info","message":"Fetched all customers","timestamp":"2025-05-12T13:22:41.897Z"}
+{"level":"error","message":"Error creating campaign for user 681e16e5e9580d4eb804f09b: Cast to Number failed for value \"{ gte: 5 }\" (type Object) at path \"visits\" for model \"Customer\"","timestamp":"2025-05-12T13:26:40.089Z"}
+{"level":"error","message":"Error creating campaign for user 681e16e5e9580d4eb804f09b: Cast to Number failed for value \"{ gte: 1000 }\" (type Object) at path \"totalSpend\" for model \"Customer\"","timestamp":"2025-05-12T13:27:12.590Z"}
+{"level":"error","message":"Error creating campaign for user 681e16e5e9580d4eb804f09b: Cast to Number failed for value \"{ gte: 5 }\" (type Object) at path \"visits\" for model \"Customer\"","timestamp":"2025-05-12T13:27:35.362Z"}
+{"level":"error","message":"Error creating campaign for user 681e16e5e9580d4eb804f09b: Cast to Number failed for value \"{ gte: 1000 }\" (type Object) at path \"totalSpend\" for model \"Customer\"","timestamp":"2025-05-12T13:35:32.794Z"}
+{"level":"error","message":"Error creating campaign for user 681e16e5e9580d4eb804f09b: Cast to Number failed for value \"{ gte: 1000 }\" (type Object) at path \"totalSpend\" for model \"Customer\"","timestamp":"2025-05-12T13:35:40.341Z"}
+{"level":"error","message":"Error creating campaign for user 681e16e5e9580d4eb804f09b: Cast to Number failed for value \"{ gte: 1000 }\" (type Object) at path \"totalSpend\" for model \"Customer\"","timestamp":"2025-05-12T13:35:43.360Z"}
+{"level":"info","message":"Campaign 6821f93e0ef83253b3b7b244 created for user 681e16e5e9580d4eb804f09b","timestamp":"2025-05-12T13:35:59.090Z"}
+{"level":"info","message":"Campaign 6821f93e0ef83253b3b7b244 updated with 0 communication logs","timestamp":"2025-05-12T13:35:59.177Z"}
+{"level":"info","message":"Fetched delivery logs","timestamp":"2025-05-12T13:41:09.481Z"}
