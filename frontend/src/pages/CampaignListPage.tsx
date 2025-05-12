@@ -34,6 +34,7 @@ export default function CampaignListPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const backend = import.meta.env.VITE_BACKEND_URL;
+  const token = localStorage.getItem('auth_token');
 
 
   useEffect(() => {
@@ -46,7 +47,9 @@ export default function CampaignListPage() {
     
     try {
       // Fetch campaigns from backend API
-      const response = await axios.get(`${backend}/api/campaigns`);
+      const response = await axios.get(`${backend}/api/campaigns`,  {
+          headers: { Authorization: `Bearer ${token}` },
+        });
       const backendCampaigns = response.data;
       
       // Map backend data to frontend Campaign interface
