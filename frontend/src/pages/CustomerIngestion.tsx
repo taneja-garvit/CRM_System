@@ -126,9 +126,10 @@ const CustomerIngestion: React.FC = () => {
       setIsConfirmOpen(false);
     } catch (err: any) {
       if (err.response?.status === 401) {
-        localStorage.removeItem('token');
-        navigate('/login');
-      } else if (err.response?.status === 400) {
+        // localStorage.removeItem('token');
+        // navigate('/login');
+      }
+        else if (err.response?.status === 400) {
         setError(err.response.data.error);
       } else {
         setError('Failed to ingest customer');
