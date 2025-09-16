@@ -44,25 +44,46 @@ export const segmentCustomers = async (req, res) => {
         const prompt = `Analyze customer data and suggest a segment (e.g., High Spender, Frequent Visitor, Inactive User). Customer data: totalSpend=$${customer.totalSpend}, visits=${customer.visits}, lastActive=${customer.lastActive}.`;
 
         const aiResponse = await axios.post(
-          'https://api.openai.com/v1/chat/completions',
+          'https://api.perplexity.ai/chat/completions',
           {
-            model: 'gpt-3.5-turbo',
+            model: 'sonar-pro', // Perplexity model
             messages: [
-              { role: 'system', content: 'You are a marketing assistant that segments customers based on their data.' },
-              { role: 'user', content: prompt },
+              {
+                role: 'system',
+                content: 'You are a marketing assistant that segments customers based on their data.'
+              },
+              {
+                role: 'user',
+                content: prompt,
+              },
             ],
             max_tokens: 20,
             temperature: 0.5,
           },
           {
             headers: {
-              'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+              Authorization: `Bearer ${process.env.PERPLEXITY_API_KEY}`,
               'Content-Type': 'application/json',
+              Accept: 'application/json',
             },
           }
         );
 
-        const segment = aiResponse.data.choices[0].message.content.trim();
+        // robust extraction (like we did earlier)
+        let segment =
+          aiResponse.data?.choices?.[0]?.message?.content ??
+          aiResponse.data?.choices?.[0]?.message ??
+          aiResponse.data?.choices?.[0]?.text ??
+          aiResponse.data?.answer ??
+          aiResponse.data?.output_text ??
+          '';
+
+        segment = (segment || '').toString().trim();
+
+        if (!segment) {
+          segment = 'Uncategorized'; // fallback if AI gives nothing
+        }
+
         return { ...customer, segment };
       })
     );
@@ -70,7 +91,7 @@ export const segmentCustomers = async (req, res) => {
     console.log('Customers segmented with AI');
     res.status(200).json({ message: 'Customers segmented successfully', customers: segmentedCustomers });
   } catch (error) {
-    console.error('Error segmenting customers with Open AI:', error.message);
+    console.error('Error segmenting customers with Perplexity:', error.message);
     res.status(500).json({ error: 'Failed to segment customers with AI' });
   }
 };
