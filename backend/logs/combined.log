@@ -357,3 +357,5 @@
 {"level":"info","message":"Fetched delivery logs","timestamp":"2025-08-15T13:05:33.463Z"}
 {"level":"info","message":"Fetched user: 689f2f1695ed9c748dc9cf91","timestamp":"2025-08-15T13:05:59.627Z"}
 {"level":"info","message":"Fetched all customers","timestamp":"2025-08-15T13:05:59.691Z"}
+{"level":"info","message":"Authentication successful for user: taneja.garvit29@gmail.com","timestamp":"2025-09-16T05:52:54.286Z"}
+{"level":"info","message":"Sending token to frontend: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUxNmU1ZTk1ODBkNGViODA0ZjA5YiIsImlhdCI6MTc1ODAwMTk3NCwiZXhwIjoxNzU4MDA1NTc0fQ.fLrmKtD8h1o_7Z2qJFb-nvU9Tnps0dXn_j5U_II9Vlw","timestamp":"2025-09-16T05:52:54.300Z"}
