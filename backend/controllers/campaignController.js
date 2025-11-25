@@ -79,7 +79,7 @@ export const generateMessage = async (req, res) => {
     if (customerData) {
       fullPrompt += ` Customer data: ${JSON.stringify(customerData)}.`;
     }
-    fullPrompt += ' Keep the message concise, sometimes 100 characters and sometimes 150 or more use different different emojis, and uniques messages according to prices or visits if less spending then messages like "why shopping less" and different for high spenders mroe than $2000, and suitable for a marketing campaign.';
+    fullPrompt += ' Keep the message concise, sometimes 100 characters and sometimes 150 or more use different different emojis, and uniques messages according to prices or visits if less spending then messages like "why shopping less" and different for high spenders mroe than $2000, and suitable for a marketing campaign. and just give the messgae without any starting line or outro';
 
     const reqBody = {
       model: 'sonar-pro', 
